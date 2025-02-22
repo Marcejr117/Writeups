@@ -1,0 +1,52 @@
+[book]
+authors = ["R1nzler"]
+language = "en"
+description = "Just my writeup's page 'HTB, VulnHub TryHackMe ...'"
+multilingual = false
+src = "src"
+title = "R1nzler-Writeups"
+
+[preprocessor]
+
+# para poder hacer notas, es parecido al de abajo, https://github.com/tommilligan/mdbook-admonish
+[preprocessor.admonish]
+command = "mdbook-admonish"
+after = ["links"]
+assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
+
+# Como si fueran los de obsidian https://github.com/lambdalisue/rs-mdbook-alerts
+[preprocessor.alerts]
+
+# Para que el codigo en linea se vea mas bonito, https://github.com/phoenixr-codes/mdbook-inline-highlighting, da problemas con las tablas
+#[preprocessor.inline-highlighting]
+default-language = "none"
+
+# Para el TOC, https://github.com/JorelAli/mdBook-pagetoc
+#[preprocessor.pagetoc]
+
+
+# TOC, https://crates.io/crates/mdbook-tocjs
+[preprocessor.tocjs]
+save_dir = "lib"
+theme_dir = "theme"
+block_marker_id = "tock"
+wing_marker_id = "tocw"
+base_url = "/"
+
+
+
+
+
+[output]
+
+[output.html]
+default-theme = "ayu"
+no-section-label = true
+git-repository-url = "https://github.com/Marcejr117/r1nzler"
+
+additional-css = ["./mdbook-admonish.css"]
+
+
+[output.html.fold]
+enable = true    # whether or not to enable section folding
+level = 0
