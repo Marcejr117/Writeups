@@ -10,6 +10,7 @@
 	- [EscapeTwo](WriteUps/HTB/EscapeTwo.md) 
 	- [Symfonos 1](WriteUps/HTB/Symfonos%201.md)
 	- [Titanic](WriteUps/HTB/Titanic.md)
+	- [Maquina 1](Maquina%201.md)
 
 # Tools
 - [bloodhaunt](Tools/bloodhaunt.md)
