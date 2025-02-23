@@ -1,7 +1,3 @@
----
-title: EscapeTwo
-date: 2025-02-16
----
 
 # Enumeration
 
@@ -347,5 +343,5 @@ evil-winrm --ip 10.10.11.51 -u Administrator -H '7a8d4e[snip]60f75e5a0b3ff'
 
 ![Pasted image 20250220155628.png](../../../../assets/Pasted%20image%2020250220155628.png)
 
-* Now we are admin
+* Now we are admin:
   ![Pasted image 20250220160118.png](../../../../assets/Pasted%20image%2020250220160118.png)

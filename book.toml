@@ -34,19 +34,20 @@ assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 #base_url = "/"
 
 
-
-
+# TOC del mdbook-theme:https://crates.io/crates/mdbook-theme
+#[preprocessor.theme]
+#pagetoc = true
 
 [output]
 
 [output.html]
-default-theme = "ayu"
 no-section-label = true
 git-repository-url = "https://github.com/Marcejr117/Writeups"
 
 additional-css = ["./mdbook-admonish.css"]
 
-
 [output.html.fold]
 enable = true    # whether or not to enable section folding
 level = 0
+
+
