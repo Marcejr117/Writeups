@@ -9,6 +9,7 @@ on: [push]
 jobs:
   buildAndDeploy:
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write  # Para poder hacer push a una rama
       pull-requests: write  # Para crear PR si fuera necesario
