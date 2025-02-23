@@ -7,8 +7,9 @@
 # Walkthrougs
 
 - [HTB]()
-	- [Maquina 1](WriteUps/HTB/Maquina%201.md) 
-	- [Example](WriteUps/HTB/Que%20locura.md)
+	- [EscapeTwo](WriteUps/HTB/EscapeTwo.md) 
+	- [Symfonos 1](WriteUps/HTB/Symfonos%201.md)
+	- [Titanic](WriteUps/HTB/Titanic.md)
 # Cositas
 - [Draft Chapter]()
 
