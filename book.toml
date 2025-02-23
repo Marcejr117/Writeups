@@ -22,7 +22,7 @@ assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 #default-language = "none"
 
 # Para el TOC, https://github.com/JorelAli/mdBook-pagetoc
-#[preprocessor.pagetoc]
+[preprocessor.pagetoc]
 
 
 # TOC, https://crates.io/crates/mdbook-tocjs
@@ -43,8 +43,9 @@ assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 [output.html]
 no-section-label = true
 git-repository-url = "https://github.com/Marcejr117/Writeups"
+additional-css = ["./mdbook-admonish.css", "theme/pagetoc.css"]
+additional-js = ["theme/pagetoc.js"]
 
-additional-css = ["./mdbook-admonish.css"]
 
 [output.html.fold]
 enable = true    # whether or not to enable section folding
