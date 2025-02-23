@@ -1,8 +1,10 @@
 
 # Enumeration
 
- > [!Warning]
- > HTB provides us with some valid credentials `rose / KxEPkKe6R8su`
+> [!INFO]
+> HTB provides us with some valid credentials `rose / KxEPkKe6R8su`
+
+
 
 * As in all penetration test, we start with a [nmap](tools/nmap.md) scan
 
@@ -10,8 +12,9 @@
 nmap -p- -sS -n -Pn --min-rate 5000 -open 10.10.11.51 -oG allPorts
 ````
 
- > [!Result]-
- > ![Pasted image 20250216204247.png](../../../../assets/Pasted%20image%2020250216204247.png)
+```admonish title="Result", collapsible=true
+ ![Pasted image 20250216204247.png](../../../../assets/Pasted%20image%2020250216204247.png)
+```
 
 * Now we now that the target machine is a windows enviroment, lets preforme some version scan and use some commons scripts against this ports
 
