@@ -15,7 +15,7 @@ after = ["links"]
 assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 
 #Como si fueran los de obsidian https://crates.io/crates/mdbook-callouts/0.2.2
-[preprocessor.alerts]
+[preprocessor.callouts]
 
 #Para que el codigo en linea se vea mas bonito, https://github.com/phoenixr-codes/mdbook-inline-highlighting, da problemas con las tablas
 #[preprocessor.inline-highlighting]
