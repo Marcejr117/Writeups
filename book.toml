@@ -19,7 +19,7 @@ assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 
 # Para que el codigo en linea se vea mas bonito, https://github.com/phoenixr-codes/mdbook-inline-highlighting, da problemas con las tablas
 #[preprocessor.inline-highlighting]
-default-language = "none"
+#default-language = "none"
 
 # Para el TOC, https://github.com/JorelAli/mdBook-pagetoc
 #[preprocessor.pagetoc]
