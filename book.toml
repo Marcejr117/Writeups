@@ -42,7 +42,7 @@ base_url = "/"
 [output.html]
 default-theme = "ayu"
 no-section-label = true
-git-repository-url = "https://github.com/Marcejr117/r1nzler"
+git-repository-url = "https://github.com/Marcejr117/Writeups"
 
 additional-css = ["./mdbook-admonish.css"]
 
