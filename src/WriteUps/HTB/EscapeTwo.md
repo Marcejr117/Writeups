@@ -2,7 +2,7 @@
 # Enumeration
 
  > [!Warning]
- > <br>HTB provides us with some valid credentials `rose / KxEPkKe6R8su`
+ > HTB provides us with some valid credentials `rose / KxEPkKe6R8su`
 
 * As in all penetration test, we start with a [nmap](tools/nmap.md) scan
 
