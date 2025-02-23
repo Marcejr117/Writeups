@@ -1,38 +1,37 @@
-name: Build Book & Deploy to Vercel
+name: Deploy to Vercel
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-on: [push]
+on:
+  push:
+    branches:
+      - main  # O la rama que prefieras
 
 jobs:
-  buildAndDeploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # To push a branch 
-      pull-requests: write  # To create a PR from that branch
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
 
       - name: Install mdBook
-        uses: extractions/setup-crate@v1
-        with:
-          owner: rust-lang
-          name: mdBook
+        run: cargo install mdbook
 
-      - name: Generate static content for the book
+      - name: Install mdbook-admonish
+        run: cargo install mdbook-admonish
+
+      - name: Build the book
         run: mdbook build
 
-      - name: Setup Node.js (required to install Vercel CLI)
-        uses: actions/setup-node@v3
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel
-
-      - name: Pull Vercel environment information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
       - name: Deploy to Vercel
-        run: vercel book --prod --token=${{ secrets.VERCEL_TOKEN }}
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: .
+          vercel-args: '--prod'
