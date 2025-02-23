@@ -22,6 +22,19 @@ jobs:
         with:
           owner: rust-lang
           name: mdBook
+      
+      # - name: Install Rust toolchain
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: stable
+
+      # - name: Cache Cargo dependencies
+      #   uses: actions-rs/cache@v1
+      #   with:
+      #     path: ~/.cargo/registry
+
+      - name: Install plugin mdbook-admonish
+        run: cargo install mdbook-admonish
 
       - name: Generate static content for the book
         run: mdbook build
