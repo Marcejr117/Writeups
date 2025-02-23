@@ -26,12 +26,12 @@ assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 
 
 # TOC, https://crates.io/crates/mdbook-tocjs
-[preprocessor.tocjs]
-save_dir = "lib"
-theme_dir = "theme"
-block_marker_id = "tock"
-wing_marker_id = "tocw"
-base_url = "/"
+#[preprocessor.tocjs]
+#save_dir = "lib"
+#theme_dir = "theme"
+#block_marker_id = "tock"
+#wing_marker_id = "tocw"
+#base_url = "/"
 
 
 
